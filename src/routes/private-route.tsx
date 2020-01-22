@@ -1,4 +1,4 @@
-import React, {Component, FC} from 'react';
+import React, {Component} from 'react';
 import {Route, Redirect, RouteProps} from 'react-router-dom';
 
 import {useKeycloak} from "@react-keycloak/web";
