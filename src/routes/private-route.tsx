@@ -12,9 +12,5 @@ export const PrivateRoute: React.FC<RouteProps> = (props) => {
     if (!keycloak.authenticated)
         return <Redirect to={{pathname: '/login', state: {from: rest.location}}} />;
 
-    return(
-        <Route
-            {...rest}
-            render={props => <Component {...props} />} />
-    )
+    return <Route {...rest} render={props => <Component {...props} />} />
 };
