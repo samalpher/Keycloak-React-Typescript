@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Keycloak, {KeycloakInitOptions} from 'keycloak-js'
+import {KeycloakEvent, KeycloakProvider, KeycloakTokens} from "@react-keycloak/web";
+import {AppRouter} from "./routes";
 
 const App: React.FC = () => {
+
+  const keycloak = Keycloak({
+    clientId: '<client id>',
+    realm: '<realm name>',
+    url: 'https://keycloak-url/auth/'
+  });
+
+  const keycloakProviderInitConfig: KeycloakInitOptions = {
+    onLoad: 'check-sso',
+    promiseType: 'native'
+  };
+
+  const onKeycloakEvent = (event: KeycloakEvent) => {
+    console.log('onKeycloakEvent', event);
+  };
+
+  const onKeycloakTokens = (tokens: KeycloakTokens) => {
+    console.log('onKeycloakTokens', tokens);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <KeycloakProvider
+        keycloak={keycloak}
+        initConfig={keycloakProviderInitConfig}
+        onEvent={onKeycloakEvent}
+        onTokens={onKeycloakTokens}
+    >
+      <AppRouter />
+    </KeycloakProvider>
   );
-}
+};
 
 export default App;
