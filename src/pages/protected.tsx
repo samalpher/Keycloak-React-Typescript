@@ -7,7 +7,7 @@ const ProtectedPage: React.FC = () => {
     const handleLogout = () => {
         keycloak.logout();
     };
-    console.log('in protected');
+
     return (
         <div>
             <div>
